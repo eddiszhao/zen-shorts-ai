@@ -59,10 +59,6 @@ function generateImageUrl(imagePrompt: string, index: number): string {
   return `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=1024&nologo=true&seed=${seed}`;
 }
 
-async function delay(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 export async function POST(request: NextRequest) {
   try {
     const { topic } = await request.json();
@@ -83,16 +79,9 @@ export async function POST(request: NextRequest) {
 
     const script = await generateScript(topic.trim());
 
-    const images: string[] = [];
-    for (let i = 0; i < script.scenes.length; i++) {
-      const scene = script.scenes[i];
-      const imageUrl = generateImageUrl(scene.image_prompt, i);
-      images.push(imageUrl);
-      
-      if (i < script.scenes.length - 1) {
-        await delay(1500);
-      }
-    }
+    const images: string[] = script.scenes.map((scene, index) => {
+      return generateImageUrl(scene.image_prompt, index);
+    });
 
     return NextResponse.json({
       success: true,
