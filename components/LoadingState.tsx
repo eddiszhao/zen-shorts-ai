@@ -3,7 +3,7 @@
 import { Loader2, FileText, Image } from "lucide-react";
 
 interface LoadingStateProps {
-  step: "script" | "images";
+  step: "idle" | "script" | "images";
 }
 
 export default function LoadingState({ step }: LoadingStateProps) {

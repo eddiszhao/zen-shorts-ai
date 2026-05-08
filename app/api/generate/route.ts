@@ -61,9 +61,6 @@ async function generateImage(prompt: string, index: number): Promise<string> {
 
   const model = genAI.getGenerativeModel({
     model: "gemini-2.0-flash-exp",
-    generationConfig: {
-      responseModalities: ["TEXT", "IMAGE"],
-    },
   });
 
   const result = await model.generateContent(prompt);
