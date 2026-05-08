@@ -22,11 +22,11 @@ async function generateScript(topic: string): Promise<Script> {
 ${prompt}`;
 
   console.log("[DEBUG] Generating script with prompt length:", fullPrompt.length);
-  console.log("[DEBUG] Using model: gemini-pro");
+  console.log("[DEBUG] Using model: gemini-2.5-flash");
 
   try {
     const model = genAI.getGenerativeModel({
-      model: "gemini-pro",
+      model: "gemini-2.5-flash",
       generationConfig: {
         temperature: 0.8,
         responseMimeType: "application/json",
