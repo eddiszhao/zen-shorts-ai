@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary: #1a1a2e;
+  --secondary: #4a4e69;
+  --accent: #f4a261;
+  --background: #0f0f1a;
+  --foreground: #e8e8e8;
+}
+
+body {
+  background: linear-gradient(135deg, var(--background) 0%, var(--primary) 100%);
+  color: var(--foreground);
+  font-family: 'Inter', sans-serif;
+}
+
+.font-display {
+  font-family: 'Playfair Display', serif;
+}
+
+.font-mono {
+  font-family: 'Fira Code', monospace;
+}
+
+.glass-card {
+  background: rgba(26, 26, 46, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glow-accent {
+  box-shadow: 0 0 20px rgba(244, 162, 97, 0.3);
+}
+
+.glow-accent:hover {
+  box-shadow: 0 0 30px rgba(244, 162, 97, 0.5);
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
