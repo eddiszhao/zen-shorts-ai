@@ -53,28 +53,9 @@ ${prompt}`;
   }
 }
 
-async function generateImage(prompt: string, index: number): Promise<string> {
-  if (USE_MOCK_DATA) {
-    console.log("[DEBUG] Using mock image data");
-    return mockImages[index] || "";
-  }
-
-  const model = genAI.getGenerativeModel({
-    model: "gemini-2.5-flash-image",
-  });
-
-  const result = await model.generateContent([prompt]);
-  const response = result.response;
-
-  const imagePart = response.candidates?.[0]?.content?.parts?.find(
-    (part) => part.inlineData?.mimeType?.startsWith("image/")
-  );
-
-  if (imagePart?.inlineData) {
-    return `data:${imagePart.inlineData.mimeType};base64,${imagePart.inlineData.data}`;
-  }
-
-  throw new Error("No image generated from Gemini");
+function generateImageUrl(imagePrompt: string): string {
+  const encodedPrompt = encodeURIComponent(imagePrompt);
+  return `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=1024&nologo=true`;
 }
 
 export async function POST(request: NextRequest) {
@@ -100,13 +81,8 @@ export async function POST(request: NextRequest) {
     const images: string[] = [];
     for (let i = 0; i < script.scenes.length; i++) {
       const scene = script.scenes[i];
-      try {
-        const image = await generateImage(scene.image_prompt, i);
-        images.push(image);
-      } catch (error) {
-        console.error(`Failed to generate image for scene ${scene.scene_number}:`, error);
-        images.push("");
-      }
+      const imageUrl = generateImageUrl(scene.image_prompt);
+      images.push(imageUrl);
     }
 
     return NextResponse.json({
