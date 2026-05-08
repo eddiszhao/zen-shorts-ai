@@ -4,7 +4,10 @@ import { SCRIPT_GENERATION_PROMPT } from "@/lib/prompts";
 import { mockScript, mockImages } from "@/lib/mockData";
 import type { Script } from "@/lib/types";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const genAI = new GoogleGenerativeAI({
+  apiKey: process.env.GEMINI_API_KEY || "",
+  apiVersion: "v1",
+});
 const USE_MOCK_DATA = process.env.USE_MOCK_DATA === "true";
 
 async function generateScript(topic: string): Promise<Script> {
