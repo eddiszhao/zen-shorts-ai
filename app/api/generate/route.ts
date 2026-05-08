@@ -22,11 +22,11 @@ async function generateScript(topic: string): Promise<Script> {
 ${prompt}`;
 
   console.log("[DEBUG] Generating script with prompt length:", fullPrompt.length);
-  console.log("[DEBUG] Using model: gemini-1.5-pro");
+  console.log("[DEBUG] Using model: gemini-pro");
 
   try {
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash-latest",
+      model: "gemini-pro",
       generationConfig: {
         temperature: 0.8,
         responseMimeType: "application/json",
@@ -60,7 +60,7 @@ async function generateImage(prompt: string, index: number): Promise<string> {
   }
 
   const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash-latest",
+    model: "gemini-pro-vision",
   });
 
   const result = await model.generateContent(prompt);
