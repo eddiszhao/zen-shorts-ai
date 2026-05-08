@@ -53,9 +53,14 @@ ${prompt}`;
   }
 }
 
-function generateImageUrl(imagePrompt: string): string {
+function generateImageUrl(imagePrompt: string, index: number): string {
   const encodedPrompt = encodeURIComponent(imagePrompt);
-  return `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=1024&nologo=true`;
+  const seed = Math.floor(Math.random() * 1000000) + index * 1000;
+  return `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=1024&nologo=true&seed=${seed}`;
+}
+
+async function delay(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 export async function POST(request: NextRequest) {
@@ -81,8 +86,12 @@ export async function POST(request: NextRequest) {
     const images: string[] = [];
     for (let i = 0; i < script.scenes.length; i++) {
       const scene = script.scenes[i];
-      const imageUrl = generateImageUrl(scene.image_prompt);
+      const imageUrl = generateImageUrl(scene.image_prompt, i);
       images.push(imageUrl);
+      
+      if (i < script.scenes.length - 1) {
+        await delay(1500);
+      }
     }
 
     return NextResponse.json({
