@@ -60,10 +60,10 @@ async function generateImage(prompt: string, index: number): Promise<string> {
   }
 
   const model = genAI.getGenerativeModel({
-    model: "gemini-2.5-flash",
+    model: "gemini-2.5-flash-image-preview",
   });
 
-  const result = await model.generateContent(prompt);
+  const result = await model.generateContent([prompt, { inlineData: { data: "", mimeType: "image/png" } }]);
   const response = result.response;
 
   const imagePart = response.candidates?.[0]?.content?.parts?.find(
