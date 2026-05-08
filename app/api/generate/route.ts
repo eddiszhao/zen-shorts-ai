@@ -26,7 +26,7 @@ ${prompt}`;
 
   try {
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
+      model: "gemini-pro",
       generationConfig: {
         temperature: 0.8,
         responseMimeType: "application/json",
@@ -60,7 +60,7 @@ async function generateImage(prompt: string, index: number): Promise<string> {
   }
 
   const model = genAI.getGenerativeModel({
-    model: "gemini-2.0-flash-exp",
+    model: "gemini-pro-vision",
   });
 
   const result = await model.generateContent(prompt);
